@@ -17,7 +17,7 @@ $io->process('post');
 
 function post($message) 
 {
-    die($message);
+    die(print_r(unserialize($message), true));
 
     [$id, $author, $title, $content] = unserialize($message);
 
