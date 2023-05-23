@@ -22,7 +22,7 @@ function post($message)
     audit::log("Creating POST '$title' by $author on " . getenv('DOMAIN'));
 
     // Write content to file
-    $filename = '/tmp/post_'.getenv('DOMAIN').'_'.md5().'.txt';
+    $filename = '/tmp/post_'.getenv('DOMAIN').'_'.uniq().'.txt';
     file_put_contents($filename, $content);
 
     // Publish Content retreiving new post ID, remove temp file
