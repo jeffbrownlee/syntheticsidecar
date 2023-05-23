@@ -17,8 +17,6 @@ $io->process('post');
 
 function post($message) 
 {
-    die(print_r(unserialize($message), true));
-
     [$id, $author, $title, $content] = unserialize($message);
 
     audit::log("Creating POST '$title' by $author on " . getenv('DOMAIN'));
