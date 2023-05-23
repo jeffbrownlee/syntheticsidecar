@@ -1,0 +1,14 @@
+{
+    "name": "digerati/syntheticsidecar",
+    "description": "Wordpress Sidecar for Synthetic Journalist",
+    "type": "project",
+    "require": {
+        "php-amqplib/php-amqplib": "^3.2"
+    },
+    "authors": [
+        {
+            "name": "Digerati, Inc.",
+            "email": "admin@digerati.net"
+        }
+    ]
+}
