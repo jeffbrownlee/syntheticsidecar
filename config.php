@@ -1,9 +1,9 @@
 <?php
 
-setenv('RABBITMQ_HOST', 'localhost');
-setenv('RABBITMQ_PORT', '5672');
-setenv('RABBITMQ_USERNAME', 'root');
-setenv('RABBITMQ_PASSWORD', 'password');
-setenv('RABBITMQ_VIRTUAL_HOST', 'development');
+putenv('RABBITMQ_HOST', 'localhost');
+putenv('RABBITMQ_PORT', '5672');
+putenv('RABBITMQ_USERNAME', 'root');
+putenv('RABBITMQ_PASSWORD', 'password');
+putenv('RABBITMQ_VIRTUAL_HOST', 'development');
 
-setenv('DOMAIN', 'domain');
+putenv('DOMAIN', 'domain');
