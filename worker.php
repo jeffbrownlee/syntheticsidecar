@@ -42,6 +42,4 @@ function post($message)
     $pmq->send( serialize([ $id, $title, $url ]) );
 
     audit::log("Sending '$title' by $author to social worker.");
-
-    $mysqli->close();
 }
