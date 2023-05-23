@@ -34,8 +34,8 @@ function post($message)
     unlink($filename);
 
     // Get URL for new post
-    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post --field=guid --allow-root", $url);
-    $url = str_replace('http://', 'https://', $url);
+    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post[0] --field=guid --allow-root", $url);
+    $url = str_replace('http://', 'https://', $url[0]);
 
     // Send the URL back to the social worker
     $pmq = new \queue\messagequeue('social');
