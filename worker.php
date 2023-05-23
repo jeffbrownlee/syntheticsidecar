@@ -30,11 +30,11 @@ function post($message)
     file_put_contents($filename, $content);
 
     // Publish Content retreiving new post ID, remove temp file
-    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post create $filename --post_author=$author --post_title='$title' --post_status=publish --porcelain", $post);
+    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post create $filename --post_author=$author --post_title='$title' --post_status=publish --porcelain --allow-root", $post);
     unlink($filename);
 
     // Get URL for new post
-    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post --field=guid", $url);
+    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post --field=guid --allow-root", $url);
     $url = str_replace('http://', 'https://', $url);
 
     // Send the URL back to the social worker
