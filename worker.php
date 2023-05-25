@@ -44,7 +44,7 @@ function post($message)
         $filename = '/tmp/image_'.getenv('DOMAIN').'_'.uniqid().'.png';
         exec("wget '$image' -O $filename");
         exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$filename' --porcelain --allow-root", $featured);
-        exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta remove $post[0] _thumbnail_id $featured[0] --allow-root");
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
         unlink($filename);
     }
 
