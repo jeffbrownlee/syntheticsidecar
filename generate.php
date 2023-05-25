@@ -26,8 +26,11 @@ while (true) {
                     $image_data = substr($image_data,strpos($image_data,",")+1);
                     file_put_contents("/tmp/$session_key.$k.jpg", base64_decode(str_replace(' ','+',$image_data)));
                 }                   
+                $client->close();
                 die($session_key);
         }
       } catch (\WebSocket\ConnectionException $e) { }
 }
+
 $client->close();
+die();

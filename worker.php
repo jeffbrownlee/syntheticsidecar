@@ -40,13 +40,16 @@ function post($message)
 
     // Create an image for the post
     exec("cd /var/www/syntheticsidecar && php generate.php '$title'", $hash);
-    exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '/tmp/$hash[0].0.jpg' --porcelain --allow-root", $featured);
-    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
 
-    unlink("/tmp/$hash[0].0.jpg");
-    unlink("/tmp/$hash[0].1.jpg");
-    unlink("/tmp/$hash[0].2.jpg");
-    unlink("/tmp/$hash[0].3.jpg");
+    if (!empty($hash)) {
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '/tmp/$hash[0].0.jpg' --porcelain --allow-root", $featured);
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
+
+        unlink("/tmp/$hash[0].0.jpg");
+        unlink("/tmp/$hash[0].1.jpg");
+        unlink("/tmp/$hash[0].2.jpg");
+        unlink("/tmp/$hash[0].3.jpg");
+    }
 
     // Send the URL back to the social worker
     $pmq = new \queue\messagequeue('social');
