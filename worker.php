@@ -41,7 +41,7 @@ function post($message)
 
     // Import image to media library and set as featured image on article
     if (!empty($image)) {
-        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import $image --porcelain --allow-root", $featured);
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$image' --porcelain --allow-root", $featured);
         exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta remove $post[0] _thumbnail_id $featured[0] --allow-root");
     }
 
