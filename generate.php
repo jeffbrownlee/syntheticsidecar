@@ -2,7 +2,7 @@
 
 set_time_limit(0);
 
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 $client = new WebSocket\Client("wss://stabilityai-stable-diffusion-1.hf.space/queue/join");
 $session_key = substr(uniqid(), 0, 11);
