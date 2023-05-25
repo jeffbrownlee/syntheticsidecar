@@ -18,10 +18,12 @@ $io->process('post');
 function post($message) 
 {
     $package = unserialize($message);
+
     $id = $package['id'];
     $author = $package['author'];
     $title = $package['title'];
     $content = $package['content'];
+    $image = $package['image'];
 
     audit::log("Creating POST '$title' by $author on " . getenv('DOMAIN'));
 
