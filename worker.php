@@ -23,7 +23,6 @@ function post($message)
     $author = $package['author'];
     $title = $package['title'];
     $content = $package['content'];
-    $image = $package['image'];
 
     audit::log("Creating POST '$title' by $author on " . getenv('DOMAIN'));
 
@@ -39,14 +38,15 @@ function post($message)
     exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post[0] --field=guid --allow-root", $url);
     $url = str_replace('http://', 'https://', $url[0]);
 
-    // Import image to media library and set as featured image on article
-    if (!empty($image)) {
-        $filename = '/tmp/image_'.getenv('DOMAIN').'_'.uniqid().'.png';
-        exec("wget '$image' -O $filename");
-        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$filename' --porcelain --allow-root", $featured);
-        exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
-        unlink($filename);
-    }
+    // Create an image for the post
+    exec("cd /var/www/syntheticsidecar && php generate.php '$title'", $hash);
+    exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '/tmp/$hash[0].0.jpg' --porcelain --allow-root", $featured);
+    exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
+
+    unlink("/tmp/$hash[0].0.jpg");
+    unlink("/tmp/$hash[0].1.jpg");
+    unlink("/tmp/$hash[0].2.jpg");
+    unlink("/tmp/$hash[0].3.jpg");
 
     // Send the URL back to the social worker
     $pmq = new \queue\messagequeue('social');

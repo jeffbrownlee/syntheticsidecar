@@ -3,7 +3,8 @@
     "description": "Wordpress Sidecar for Synthetic Journalist",
     "type": "project",
     "require": {
-        "php-amqplib/php-amqplib": "^3.2"
+        "php-amqplib/php-amqplib": "^3.2",
+        "textalk/websocket": ">=1.6"
     },
     "authors": [
         {
