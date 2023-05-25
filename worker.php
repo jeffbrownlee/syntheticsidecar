@@ -41,8 +41,11 @@ function post($message)
 
     // Import image to media library and set as featured image on article
     if (!empty($image)) {
-        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$image' --porcelain --allow-root", $featured);
+        $filename = '/tmp/image_'.getenv('DOMAIN').'_'.uniqid().'.png';
+        exec("wget '$image' -O $filename");
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$filename' --porcelain --allow-root", $featured);
         exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta remove $post[0] _thumbnail_id $featured[0] --allow-root");
+        unlink($filename);
     }
 
     // Send the URL back to the social worker
