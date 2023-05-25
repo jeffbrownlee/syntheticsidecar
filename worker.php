@@ -39,6 +39,12 @@ function post($message)
     exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post[0] --field=guid --allow-root", $url);
     $url = str_replace('http://', 'https://', $url[0]);
 
+    // Import image to media library and set as featured image on article
+    if (!empty($image)) {
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import $image --porcelain --allow-root", $featured);
+        exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta remove $post[0] _thumbnail_id $featured[0] --allow-root");
+    }
+
     // Send the URL back to the social worker
     $pmq = new \queue\messagequeue('social');
     $pmq->send( serialize([ $id, $title, $url ]) );
