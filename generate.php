@@ -2,8 +2,6 @@
 
 set_time_limit(0);
 
-die($argv[1]);
-
 require_once '../vendor/autoload.php';
 
 $client = new WebSocket\Client("wss://stabilityai-stable-diffusion-1.hf.space/queue/join");
@@ -20,7 +18,7 @@ while (true) {
                 $client->send(json_encode(['session_hash' => $session_key, 'fn_index' => 3]));
                 break;
             case "send_data":
-                $client->send(json_encode(['data'=>["dogs on the freeway"], 'session_hash' => $session_key, 'fn_index' => 3]));
+                $client->send(json_encode(['data'=>[ $argv[1] ], 'session_hash' => $session_key, 'fn_index' => 3]));
                 break;
             case "process_completed":
                 foreach ($data->output->data[0] as $k=>$image_data)
