@@ -33,7 +33,7 @@ function post($message)
 
     // Publish Content retreiving new post ID, remove temp file
     exec("cd /var/www/" . getenv('DOMAIN') . " && wp post create $filename --post_author=$author --post_title='$title' --post_status=publish --porcelain --allow-root", $post);
-    unlink($filename);
+    //unlink($filename);
 
     // Get URL for new post
     exec("cd /var/www/" . getenv('DOMAIN') . " && wp post get $post[0] --field=guid --allow-root", $url);
@@ -45,7 +45,7 @@ function post($message)
         exec("wget '$image' -O $filename");
         exec("cd /var/www/" . getenv('DOMAIN') . " && wp media import '$filename' --porcelain --allow-root", $featured);
         exec("cd /var/www/" . getenv('DOMAIN') . " && wp post meta add $post[0] _thumbnail_id $featured[0] --allow-root");
-        unlink($filename);
+        //unlink($filename);
     }
 
     // Send the URL back to the social worker
